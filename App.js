@@ -8,10 +8,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
  
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
 import  Home  from './screens/Home'
 import Category from './screens/Category';  
 import Receipes from './screens/Receipes';
+import Bookmarks from './screens/Bookmark';
 
 
 
@@ -42,6 +44,10 @@ const  App = () => {
             } else if (route.name === 'Receipes') {
               iconName = focused ? 'fast-food' : 'fast-food-outline';
             }
+            else if (route.name === 'Bookmarks') {
+              iconName = focused ? 'bookmark' : 'bookmark-outline';
+              
+            }
 
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -53,6 +59,8 @@ const  App = () => {
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Category" component={Category} />
         <Tab.Screen name="Receipes" component={Receipes} />
+        <Tab.Screen name="Bookmarks" component={Bookmarks} />
+        
       </Tab.Navigator>
   </NavigationContainer>
   );
