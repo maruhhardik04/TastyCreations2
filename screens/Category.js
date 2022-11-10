@@ -14,6 +14,8 @@ const Category = () => {
     try {
      const response = await fetch('http://10.1.50.13:8000/category/');
      const json = await response.json();
+     console.log(json);
+
      setCategories(json);
    } catch (error) {
      console.error(error);
@@ -31,31 +33,27 @@ const Category = () => {
 
   return (
     <SafeAreaView >
-     <ScrollView 
-    contentContainerStyle={{
-        paddingHorizontal:20,
-        paddingTop:10
-    }}
-    horizontal
-    showsHorizontalScrollIndicator={false}>
+     
      
     
-        {categories.map((category)=>(
+        {/* {categories.map((category)=>(
           
               <CategoryItem
               key={category.id} 
-              imageUrl={'http://10.1.50.13:8000/static/'+category.image}
-              title={category.name}
-              items={category.items}
+              category={category}
               />
-        )
-  
-        )}
-    
-       
+        ))} */}
 
-    </ScrollView>
-   
+        <FlatList
+        data={categories}
+        renderItem={CategoryItem}
+        keyExtractor={item => item.id}
+        >
+
+        </FlatList>
+    
+    
+
 
     </SafeAreaView>
   )
