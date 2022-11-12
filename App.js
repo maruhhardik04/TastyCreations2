@@ -14,6 +14,7 @@ import  Home  from './screens/Home'
 import Category from './screens/Category';  
 import Receipes from './screens/Receipes';
 import Bookmarks from './screens/Bookmark';
+import ReceipesDetails from './screens/ReceipesDetails';
 
 
 
@@ -25,9 +26,6 @@ const Tab = createBottomTabNavigator();
 const  App = () => {
   return (
     <NavigationContainer>
-    {/* <Stack.Navigator screenOptions={{headerTitleAlign: 'center'}}>
-      <Stack.Screen name="Home" component={Home} />
-    </Stack.Navigator> */}
        <Tab.Navigator
         
         screenOptions={({ route }) => ({
@@ -59,7 +57,7 @@ const  App = () => {
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Category" component={Category} />
         <Tab.Screen name="Receipes" component={Receipes} />
-        <Tab.Screen name="Bookmarks" component={Bookmarks} />
+        <Tab.Screen name="Bookmarks" component={ReceipesDetails} />
         
       </Tab.Navigator>
   </NavigationContainer>

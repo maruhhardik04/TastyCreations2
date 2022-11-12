@@ -14,14 +14,15 @@ const Category = () => {
     try {
      const response = await fetch('http://10.1.50.13:8000/category/');
      const json = await response.json();
-     console.log(json);
 
      setCategories(json);
+
    } catch (error) {
      console.error(error);
    } finally {
      setLoading(false);
    }
+  
  }
 
 
