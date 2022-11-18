@@ -1,5 +1,4 @@
 import 'react-native-gesture-handler';
-
 import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {  Text,Dimensions } from 'react-native';
@@ -15,6 +14,7 @@ import Category from './screens/Category';
 import Receipes from './screens/Receipes';
 import Bookmarks from './screens/Bookmark';
 import ReceipesDetails from './screens/ReceipesDetails';
+import Navigation from './screens/Navigation';
 
 
 
@@ -25,42 +25,44 @@ const Tab = createBottomTabNavigator();
 
 const  App = () => {
   return (
-    <NavigationContainer>
-       <Tab.Navigator
+    <Navigation />
+  
+  //   <NavigationContainer>
+  //      <Tab.Navigator
         
-        screenOptions={({ route }) => ({
-          headerTitleAlign:'center',
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+  //       screenOptions={({ route }) => ({
+  //         headerTitleAlign:'center',
+  //         tabBarIcon: ({ focused, color, size }) => {
+  //           let iconName;
 
-            if (route.name === 'Home') {
-              iconName = focused
-                ? 'home'
-                : 'home-outline';
-            } else if (route.name === 'Category') {
-              iconName = focused ? 'list-circle' : 'list-circle-outline';
-            } else if (route.name === 'Receipes') {
-              iconName = focused ? 'fast-food' : 'fast-food-outline';
-            }
-            else if (route.name === 'Bookmarks') {
-              iconName = focused ? 'bookmark' : 'bookmark-outline';
+  //           if (route.name === 'Home') {
+  //             iconName = focused
+  //               ? 'home'
+  //               : 'home-outline';
+  //           } else if (route.name === 'Category') {
+  //             iconName = focused ? 'list-circle' : 'list-circle-outline';
+  //           } else if (route.name === 'Receipes') {
+  //             iconName = focused ? 'fast-food' : 'fast-food-outline';
+  //           }
+  //           else if (route.name === 'Bookmarks') {
+  //             iconName = focused ? 'bookmark' : 'bookmark-outline';
               
-            }
+  //           }
 
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'gray',
-        })}
-      >
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Category" component={Category} />
-        <Tab.Screen name="Receipes" component={Receipes} />
-        <Tab.Screen name="Bookmarks" component={ReceipesDetails} />
+  //           // You can return any component that you like here!
+  //           return <Ionicons name={iconName} size={size} color={color} />;
+  //         },
+  //         tabBarActiveTintColor: 'tomato',
+  //         tabBarInactiveTintColor: 'gray',
+  //       })}
+  //     >
+  //       <Tab.Screen name="Home" component={Home} />
+  //       <Tab.Screen name="Category" component={Category} />
+  //       <Tab.Screen name="Receipes" component={Receipes} />
+  //       <Tab.Screen name="Bookmarks" component={ReceipesDetails} />
         
-      </Tab.Navigator>
-  </NavigationContainer>
+  //     </Tab.Navigator>
+  // </NavigationContainer>
   );
 }
 

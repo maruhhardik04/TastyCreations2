@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View,SafeAreaView,Dimensions,Image,ScrollView,useWindowDimensions,ImageBackground  } from 'react-native'
+import { ActivityIndicator,StyleSheet, Text, View,SafeAreaView,Dimensions,Image,ScrollView,useWindowDimensions,ImageBackground  } from 'react-native'
 import React, { useState,useEffect } from 'react'
 import RenderHtml from 'react-native-render-html'
 import HTML from 'react-native-render-html'
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
+import FeedBack from '../components/FeedBack';
 
 
 
@@ -12,20 +13,21 @@ const windowHeight = Dimensions.get('window').height;
 
 
 
-const ReceipesDetails = ( ) => {
+const ReceipesDetails = ({navigation,route}) => {
 
     const [isLoading, setLoading] = useState(true);
     const [receipeDetails,setReceipeDetails] = useState({});
-    
+    const [receipeFeedbacks,setReceipeFeedbacks] = useState([]);
 
 
     const getReceipeDetails = async () => {
       try {
-       const response = await fetch('http://10.1.50.13:8000/item/1');
+       const response = await fetch(`http://10.1.50.13:8000/item/${route.params.id}`);
        const json = await response.json();
     
        setReceipeDetails(json.item_data);
-        // console.log(json.item_data);
+       setReceipeFeedbacks(json.feedbacks)
+        // console.log(json.feedbacks);
         // console.log(receipeDetails);
     } catch (error) {
        console.error(error);
@@ -55,7 +57,7 @@ const ReceipesDetails = ( ) => {
               contentWidth={width}
               source={{html:""+receipeDetails.instruction}}
             />
-        {/* <HTML html={receipeDetails.instruction}/> */}
+    
       </View>
       </ScrollView>
   );
@@ -68,7 +70,7 @@ const ReceipesDetails = ( ) => {
               contentWidth={width}
               source={{html:""+receipeDetails.ingredients}}
             />
-            {/* <HTML html={receipeDetails.ingredients}/> */}
+           
     </View>
     </ScrollView>
   );
@@ -77,7 +79,14 @@ const ReceipesDetails = ( ) => {
   const ThirdRoute = () => (
    <ScrollView>
    <View style={{  flex:1,padding:10  }} >
-       <Text>FeedBack</Text>
+      
+     {receipeFeedbacks.map(feedback => (
+     <FeedBack   
+     key={feedback.id}  
+     username={feedback.username} 
+     rating={feedback.rating} 
+     description={feedback.description}/>))}
+      
     </View>
     </ScrollView> 
   );
@@ -100,6 +109,14 @@ const renderScene = SceneMap({
 });
 
 
+  if(isLoading)
+  {
+    return(
+      <View style={[styles.container, styles.horizontal]}>
+      <ActivityIndicator size="large" />
+      </View>
+    )
+  }
 
   return (
        
@@ -107,8 +124,10 @@ const renderScene = SceneMap({
         
     <View style={{width:windowWidth,height:'100%'}}>
       <View>
+
           <ImageBackground style={styles.categoriesPhoto}  source={{uri:'http://10.1.50.13:8000/static/'+receipeDetails.image}}>
-          <Text style={{color:'white'}}>{receipeDetails.title}</Text>
+          
+          <Text style={{color:'white'}} onPress={()=>{ navigation.goBack();}}>{receipeDetails.title}</Text>
           </ImageBackground>
           {/* <Image style={styles.categoriesPhoto}  source={{uri:'http://10.1.50.13:8000/static/'+receipeDetails.image}}/> */}
       </View>
@@ -139,7 +158,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 1.0,
     elevation: 3
   },
-
+  container: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10
+  }
  
 });
 
