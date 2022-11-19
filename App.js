@@ -15,29 +15,25 @@ import Receipes from './screens/Receipes';
 import Bookmarks from './screens/Bookmark';
 import ReceipesDetails from './screens/ReceipesDetails';
 import Navigation from './screens/Navigation';
+import {AuthProvider} from './components/context';
 
 
 
-const fullScreenWidth = Dimensions.get('window').width;
 
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+
 
 const  App = () => {
  
-  const initialLoginState = {
-    isLoading: true,
-    userName: null,
-    userToken: null,
-  };
 
 
   
 
 
   return (
-
-    <Navigation />
+    <AuthProvider>
+        <Navigation />
+    </AuthProvider>
+    
   
   );
 }

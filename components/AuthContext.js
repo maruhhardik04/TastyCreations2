@@ -3,27 +3,23 @@ import axios from 'axios';
 import React, {createContext, useEffect, useState} from 'react';
 import {BASE_URL} from '../src/config';
 
- const AuthContext = createContext();
+const AuthContext = createContext();
+export default AuthContext;
 
- const AuthProvider = ({children}) => {
+export const AuthProvider = ({children}) => {
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [splashLoading, setSplashLoading] = useState(false);
 
-
- 
-
   const register = (name, email, password) => {
     setIsLoading(true);
 
-    
-    const form = new FormData();
-    form.append("username",name);
-    form.append("email",email);
-    form.append("password",password)
-
-
-    axios.post(`${BASE_URL}/create-user`,form)
+    axios
+      .post(`${BASE_URL}/create-user`, {
+        name,
+        email,
+        password,
+      })
       .then(res => {
         let userInfo = res.data;
         setUserInfo(userInfo);
@@ -40,11 +36,11 @@ import {BASE_URL} from '../src/config';
   const login = (email, password) => {
     setIsLoading(true);
 
-    const form = new FormData();
-    form.append("username",email);
-    form.append("password",password)
-
-    axios.post(`${BASE_URL}/login`, form)
+    axios
+      .post(`${BASE_URL}/login`, {
+        email,
+        password,
+      })
       .then(res => {
         let userInfo = res.data;
         console.log(userInfo);
@@ -56,9 +52,6 @@ import {BASE_URL} from '../src/config';
         console.log(`login error ${e}`);
         setIsLoading(false);
       });
- 
-
-
   };
 
   const logout = () => {
@@ -106,8 +99,6 @@ import {BASE_URL} from '../src/config';
     isLoggedIn();
   }, []);
 
- 
-
   return (
     <AuthContext.Provider
       value={{
@@ -122,7 +113,3 @@ import {BASE_URL} from '../src/config';
     </AuthContext.Provider>
   );
 };
-
-export {AuthContext,AuthProvider};
-
-

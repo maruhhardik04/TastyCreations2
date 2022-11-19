@@ -1,5 +1,6 @@
-import * as React from 'react';
 import { StyleSheet } from 'react-native'
+import React, {useContext} from 'react';
+
 //Navigation components
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -17,9 +18,13 @@ import Category from './Category';
 import Receipes from './Receipes';
 import Bookmarks from './Bookmark';
 import ReceipesDetails from './ReceipesDetails';
+import LoginScreen from './LoginScreen';
+import RegisterScreen from './RegisterScreen';
+import SplashScreen from './SplashScreen';
+import {AuthContext} from '../components/context';
 
 import {  Text,Dimensions } from 'react-native';
-import { shadow } from 'react-native-paper';
+
 
 const fullScreenWidth = Dimensions.get('window').width;
 const Stack = createNativeStackNavigator();
@@ -66,70 +71,117 @@ const BookmarksStackScreen = () => {
     </Stack.Navigator>
 )}
 
+const SplashStackScreen = () => {
+  return(
+    <Stack.Navigator>
+    <Stack.Screen
+    name="Splash Screen"
+    component={SplashScreen}
+    options={{headerShown: false}}
+  />
+    </Stack.Navigator>
+)
+}
+
+const AuthStack = () => {
+  return(
+  <Stack.Navigator>
+    <Stack.Screen
+     name="Login"
+      component={LoginScreen}
+      options={{headerShown: false}}
+  />
+  <Stack.Screen
+    name="Register"
+    component={RegisterScreen}
+    options={{headerShown: false}}
+  />
+  </Stack.Navigator>
+  )
+}
+
+
 
 const Tab = createBottomTabNavigator();
 
+
+
 const Navigation = ({navigation, route}) => {
-    return(
+  
+  const { userInfo,splashLoading} = useContext(AuthContext);  
+
+  return(
 
         <NavigationContainer>
-        <Tab.Navigator
-
-    
-         screenOptions={({ route }) => ({
-
           
-
-
-           headerTitleAlign:'center',
-           tabBarShowLabel:false,
-           tabBarStyle:[{
-            
-            display:"flex",
-            postion:'absolute',
-            bottom:25,
-            left:20,
-            right:20,
-            elevation:0,
-            backgroundColor:'#ffffff',
-            borderRadius:15,
-            height:60,
-            width:(fullScreenWidth-40),
-    
-            ...styles.shadow
-           }],
-           tabBarIcon: ({ focused, color, size }) => {
-             let iconName;
- 
-             if (route.name === 'Home') {
-               iconName = focused
-                 ? 'home'
-                 : 'home-outline';
-             } else if (route.name === 'Category') {
-               iconName = focused ? 'list-circle' : 'list-circle-outline';
-             } else if (route.name === 'Receipes') {
-               iconName = focused ? 'fast-food' : 'fast-food-outline';
-             }
-             else if (route.name === 'Bookmarks') {
-               iconName = focused ? 'bookmark' : 'bookmark-outline';
+        {
+          splashLoading ? (<SplashStackScreen /> ) 
+          :  
+          userInfo.access_token ? (
+            <Tab.Navigator
+            screenOptions={({ route }) => ({
+   
+             
+   
+   
+              headerTitleAlign:'center',
+              tabBarShowLabel:false,
+              tabBarStyle:[{
                
-             }
- 
-             // You can return any component that you like here!
-             return <Ionicons name={iconName} size={size} color={color} />;
-           },
-           tabBarActiveTintColor: 'tomato',
-           tabBarInactiveTintColor: 'gray',
-           tabBarLabelPosition:'below-icon'
-  
-         })}
-       >
-         <Tab.Screen name="Home" component={Home} />
-         <Tab.Screen name="Category" component={CategoryStackScreen}/>
-         <Tab.Screen name="Receipes" component={ReceipesStackScreen}  options={{unmountOnBlur:true}}/>
-         <Tab.Screen name="Bookmarks" component={Bookmarks} />
-         
-       </Tab.Navigator>
+               display:"flex",
+               postion:'absolute',
+               bottom:25,
+               left:20,
+               right:20,
+               elevation:0,
+               backgroundColor:'#ffffff',
+               borderRadius:15,
+               height:60,
+               width:(fullScreenWidth-40),
+       
+               ...styles.shadow
+              }],
+              tabBarIcon: ({ focused, color, size }) => {
+                let iconName;
+    
+                if (route.name === 'Home') {
+                  iconName = focused
+                    ? 'home'
+                    : 'home-outline';
+                } else if (route.name === 'Category') {
+                  iconName = focused ? 'list-circle' : 'list-circle-outline';
+                } else if (route.name === 'Receipes') {
+                  iconName = focused ? 'fast-food' : 'fast-food-outline';
+                }
+                else if (route.name === 'Bookmarks') {
+                  iconName = focused ? 'bookmark' : 'bookmark-outline';
+                  
+                }
+    
+                // You can return any component that you like here!
+                return <Ionicons name={iconName} size={size} color={color} />;
+              },
+              tabBarActiveTintColor: 'tomato',
+              tabBarInactiveTintColor: 'gray',
+              tabBarLabelPosition:'below-icon'
+     
+            })}
+          >
+            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Category" component={CategoryStackScreen}/>
+            <Tab.Screen name="Receipes" component={ReceipesStackScreen}  options={{unmountOnBlur:true}}/>
+            <Tab.Screen name="Bookmarks" component={Bookmarks} />
+            
+          </Tab.Navigator>
+          ):(
+            <>
+            <AuthStack />
+            </>
+          )
+        }
+
+
+       
 
     
    </NavigationContainer>
