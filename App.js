@@ -24,45 +24,21 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const  App = () => {
+ 
+  const initialLoginState = {
+    isLoading: true,
+    userName: null,
+    userToken: null,
+  };
+
+
+  
+
+
   return (
+
     <Navigation />
   
-  //   <NavigationContainer>
-  //      <Tab.Navigator
-        
-  //       screenOptions={({ route }) => ({
-  //         headerTitleAlign:'center',
-  //         tabBarIcon: ({ focused, color, size }) => {
-  //           let iconName;
-
-  //           if (route.name === 'Home') {
-  //             iconName = focused
-  //               ? 'home'
-  //               : 'home-outline';
-  //           } else if (route.name === 'Category') {
-  //             iconName = focused ? 'list-circle' : 'list-circle-outline';
-  //           } else if (route.name === 'Receipes') {
-  //             iconName = focused ? 'fast-food' : 'fast-food-outline';
-  //           }
-  //           else if (route.name === 'Bookmarks') {
-  //             iconName = focused ? 'bookmark' : 'bookmark-outline';
-              
-  //           }
-
-  //           // You can return any component that you like here!
-  //           return <Ionicons name={iconName} size={size} color={color} />;
-  //         },
-  //         tabBarActiveTintColor: 'tomato',
-  //         tabBarInactiveTintColor: 'gray',
-  //       })}
-  //     >
-  //       <Tab.Screen name="Home" component={Home} />
-  //       <Tab.Screen name="Category" component={Category} />
-  //       <Tab.Screen name="Receipes" component={Receipes} />
-  //       <Tab.Screen name="Bookmarks" component={ReceipesDetails} />
-        
-  //     </Tab.Navigator>
-  // </NavigationContainer>
   );
 }
 

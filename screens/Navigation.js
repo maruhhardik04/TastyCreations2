@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import { StyleSheet } from 'react-native'
 //Navigation components
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,6 +19,7 @@ import Bookmarks from './Bookmark';
 import ReceipesDetails from './ReceipesDetails';
 
 import {  Text,Dimensions } from 'react-native';
+import { shadow } from 'react-native-paper';
 
 const fullScreenWidth = Dimensions.get('window').width;
 const Stack = createNativeStackNavigator();
@@ -40,7 +41,7 @@ const CategoryStackScreen = () => {
         }}>
         <Stack.Screen name="CategoryScreen" component={Category} />
         <Stack.Screen name="CategoryReceipesScreen" component={Receipes} />
-       <Stack.Screen name="ReceipesDetails" component={ReceipesDetails} />
+        <Stack.Screen name="ReceipesDetails" component={ReceipesDetails} />
         </Stack.Navigator>
     )
 }
@@ -73,9 +74,30 @@ const Navigation = ({navigation, route}) => {
 
         <NavigationContainer>
         <Tab.Navigator
-         
+
+    
          screenOptions={({ route }) => ({
+
+          
+
+
            headerTitleAlign:'center',
+           tabBarShowLabel:false,
+           tabBarStyle:[{
+            
+            display:"flex",
+            postion:'absolute',
+            bottom:25,
+            left:20,
+            right:20,
+            elevation:0,
+            backgroundColor:'#ffffff',
+            borderRadius:15,
+            height:60,
+            width:(fullScreenWidth-40),
+    
+            ...styles.shadow
+           }],
            tabBarIcon: ({ focused, color, size }) => {
              let iconName;
  
@@ -98,12 +120,13 @@ const Navigation = ({navigation, route}) => {
            },
            tabBarActiveTintColor: 'tomato',
            tabBarInactiveTintColor: 'gray',
-           
+           tabBarLabelPosition:'below-icon'
+  
          })}
        >
          <Tab.Screen name="Home" component={Home} />
-         <Tab.Screen name="Category" component={CategoryStackScreen} />
-         <Tab.Screen name="Receipes" component={ReceipesStackScreen} />
+         <Tab.Screen name="Category" component={CategoryStackScreen}/>
+         <Tab.Screen name="Receipes" component={ReceipesStackScreen}  options={{unmountOnBlur:true}}/>
          <Tab.Screen name="Bookmarks" component={Bookmarks} />
          
        </Tab.Navigator>
@@ -114,3 +137,17 @@ const Navigation = ({navigation, route}) => {
 }
 
 export default Navigation
+
+
+const styles = StyleSheet.create({
+  shadow:{
+    shadowColor:'#7F5DF0',
+    shadowOffset:{
+        width:0,
+        height:10
+    },
+    shadowOpacity:0.25,
+    shadowRadius:3.5,
+    elevation:5,
+  }
+})

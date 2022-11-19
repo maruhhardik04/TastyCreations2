@@ -1,4 +1,4 @@
-import { View, Text,SafeAreaView,ScrollView,FlatList,StyleSheet,Image,TouchableOpacity } from 'react-native'
+import { View, Text,SafeAreaView,ScrollView,FlatList,StyleSheet,Image,TouchableOpacity,Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 // import CategoryItem from '../components/CategoryItem';
 
@@ -9,6 +9,7 @@ const Category = ({navigation,route}) => {
 
   const [isLoading, setLoading] = useState(true);
   const [categories,setCategories] = useState([]);
+  const screenHeight = Dimensions.get('window').height
   
   const getCategories = async () => {
     try {
@@ -48,6 +49,7 @@ const CategoryItem = ({ item  }) => {
 
 
   return (
+    
     <SafeAreaView >
         <FlatList
         data={categories}
@@ -60,6 +62,7 @@ const CategoryItem = ({ item  }) => {
 
 
     </SafeAreaView>
+ 
   )
 }
 
@@ -104,5 +107,15 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginBottom: 5
   },
+  shadow:{
+    shadowColor:'#7F5DF0',
+    shadowOffset:{
+        width:0,
+        height:10
+    },
+    shadowOpacity:0.25,
+    shadowRadius:3.5,
+    elevation:5,
+  }
  
 });
