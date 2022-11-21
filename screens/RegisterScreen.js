@@ -10,31 +10,118 @@ import {
 import Spinner from 'react-native-loading-spinner-overlay';
 import {AuthContext} from '../components/context';
 
-const RegisterScreen = ({navigation}) => {
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-  const {isLoading, register} = useContext(AuthContext);
+
+
+const RegisterScreen = ({navigation}) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [nameError, setnameError] = useState(false);
+  const [emailError, setemailError] = useState(false);
+  const [passwordError, setpasswordError] = useState(false);
+  const [nameErrorMsg,setNameErrorMsg]=useState('');
+  const [emailErrorMsg,setEmailErrorMsg]=useState('');
+  const [passwordErrorMsg,setPasswordErrorMsg]=useState('');
+
+
+
+  const {isLoading, register,userInfo} = useContext(AuthContext);
+
+
+  const checkTextInput = () => {
+
+   
+
+    //Check for the Name TextInput
+    if (!name.trim()) {
+       setnameError(true)
+       setNameErrorMsg('Username can not be empty');
+      return;
+    }
+    else if(name.length < 5 || name.length > 20)
+    {
+      setnameError(true)
+      setNameErrorMsg('Username must have minimum:5 and maximum:20 characters');
+      return; 
+    }
+    else
+    { 
+      setnameError(false)
+    }
+
+
+
+
+    //Check for the Email TextInput
+
+    let reg = /\S+@\S+\.\S+/;
+
+    if (!email.trim()) {
+      setemailError(true)
+      setEmailErrorMsg('Email can not be empty');
+      return;
+    }
+    else if(reg.test(email) === false)
+    {
+      setemailError(true)
+      setEmailErrorMsg('Email is not correct');
+      return;
+    }
+    else
+    { 
+      setemailError(false)
+    }
+
+
+    if (!password.trim()) {
+      setpasswordError(true)
+      setPasswordErrorMsg('Password can not be empty')
+      return;
+    }
+    else if(password.length < 8 || password.length > 20)
+    {
+      setpasswordError(true)
+      setPasswordErrorMsg('Password  must have minimum:8 and maximum:20 characters')
+      return;
+    }
+    else
+    {
+      setpasswordError(false)
+    }
+
+    //Checked Successfully
+    //Do whatever you want
+    register(name, email, password)
+    if(userInfo.id != null)
+    {
+      navigation.navigate('Login')
+    }
+  };
+
 
   return (
     <View style={styles.container}>
       <Spinner visible={isLoading} />
       <View style={styles.wrapper}>
+   
+
         <TextInput
           style={styles.input}
           value={name}
           placeholder="Enter name"
           onChangeText={text => setName(text)}
         />
-
+        {(nameError)?( <Text style={{color:'red'}}><AntDesign name={'exclamationcircle'} size={15} color={'red'}  />{nameErrorMsg}</Text>):(<></>)}
+        
         <TextInput
           style={styles.input}
           value={email}
           placeholder="Enter email"
           onChangeText={text => setEmail(text)}
         />
-
+         {(emailError)?( <Text style={{color:'red'}}><AntDesign name={'exclamationcircle'} size={15} color={'red'}  />{emailErrorMsg}</Text>):(<></>)}
         <TextInput
           style={styles.input}
           value={password}
@@ -42,12 +129,10 @@ const RegisterScreen = ({navigation}) => {
           onChangeText={text => setPassword(text)}
           secureTextEntry
         />
-
+         {(passwordError)?( <Text style={{color:'red'}}><AntDesign name={'exclamationcircle'} size={15} color={'red'}  />{passwordErrorMsg}</Text>):(<></>)}
         <Button
           title="Register"
-          onPress={() => {
-            register(name, email, password);
-          }}
+          onPress={checkTextInput}
         />
 
         <View style={{flexDirection: 'row', marginTop: 20}}>

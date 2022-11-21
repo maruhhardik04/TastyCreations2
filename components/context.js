@@ -9,13 +9,15 @@ import {BASE_URL} from '../src/config';
   const [userInfo, setUserInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [splashLoading, setSplashLoading] = useState(false);
+  const [apiError,setApiError]=useState(false);
+  const [apiErrorMsg,setApiErrorMsg]=useState('');
 
-
- 
+  
 
   const register = (name, email, password) => {
     setIsLoading(true);
 
+   
     
     const form = new FormData();
     form.append("username",name);
@@ -23,18 +25,25 @@ import {BASE_URL} from '../src/config';
     form.append("password",password)
 
 
-    axios.post(`${BASE_URL}/create-user`,form)
-      .then(res => {
-        let userInfo = res.data;
-        setUserInfo(userInfo);
-        AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
-        setIsLoading(false);
-        console.log(userInfo);
-      })
-      .catch(e => {
-        console.log(`register error ${e}`);
-        setIsLoading(false);
-      });
+
+
+  fetch(`${BASE_URL}/create-user`, {
+    method: 'POST',
+    body: form
+  }).then((response) => response.json())
+  .then((result) => {
+    let userInfo = result;
+    setUserInfo(userInfo);
+    AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+    setIsLoading(false);
+    console.log(userInfo);
+    
+  })
+  .catch((e) => {
+    console.log(`register error ${e}`);
+    setIsLoading(false);
+  });
+
   };
 
   const login = (email, password) => {
@@ -44,20 +53,35 @@ import {BASE_URL} from '../src/config';
     form.append("username",email);
     form.append("password",password)
 
-    axios.post(`${BASE_URL}/login`, form)
-      .then(res => {
-        let userInfo = res.data;
-        console.log(userInfo);
-        setUserInfo(userInfo);
-        AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
-        setIsLoading(false);
-      })
-      .catch(e => {
-        console.log(`login error ${e}`);
-        setIsLoading(false);
-      });
- 
+    
 
+    console.log(form);
+
+      
+    fetch(`${BASE_URL}/login`, {
+      method: 'POST',
+      body: form
+    }).then((response) => response.json())
+    .then((result) => {
+
+      // setAPi Error here if error
+      // setApiError(true);
+      // setApiErrorMsg(e)
+      
+      let userInfo = result;
+      console.log(userInfo);
+      setUserInfo(userInfo);
+      AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+      setIsLoading(false)
+    })
+    .catch((e) => {
+      console.log(`login error ${e}`);
+  
+      setIsLoading(false);
+    });
+
+    
+ 
 
   };
 
@@ -117,6 +141,8 @@ import {BASE_URL} from '../src/config';
         register,
         login,
         logout,
+        apiError,
+        apiErrorMsg
       }}>
       {children}
     </AuthContext.Provider>
