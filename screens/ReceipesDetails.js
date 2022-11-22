@@ -17,7 +17,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const ReceipesDetails = ({navigation,route}) => {
 
-  const {userInfo,feedback,bookMarks, setbookMarks,findBookMarks} = useContext(AuthContext);
+  const {userInfo,feedback,removeBookMarks,updatedBookMarks} = useContext(AuthContext);
   
     const [isLoading, setLoading] = useState(true);
     const [receipeDetails,setReceipeDetails] = useState({});
@@ -29,28 +29,23 @@ const ReceipesDetails = ({navigation,route}) => {
     const [status, setStatus] = useState('unchecked');
     
 
-    const updatedBookMarks= async() =>{
-      const updatedBookMarks = [...bookMarks, receipeDetails];
-      setbookMarks(updatedBookMarks)
-      await AsyncStorage.setItem('bookMarks', JSON.stringify(updatedBookMarks));
-    } 
+  
 
-    const onButtonToggle = value => {
+    const onButtonToggle = () => {
+
+      
       setStatus(status === 'checked' ? 'unchecked' : 'checked');
 
 
 
-     
-
-
       if(status === 'checked')
       {
-         updatedBookMarks();
+         updatedBookMarks(receipeDetails);
       } 
       
       if(status === 'unchecked')
       {
-          
+        removeBookMarks(receipeDetails.id)
       }
 
     };
@@ -102,7 +97,6 @@ const ReceipesDetails = ({navigation,route}) => {
    
     useEffect(()=>{
       getReceipeDetails();
-      onButtonToggle();
 
     },[]);
     
@@ -236,9 +230,8 @@ const renderScene = SceneMap({
           <View style={{flex:1,alignItems:'flex-end',marginTop:'5%',marginEnd:'3%'}}>
           <ToggleButton
             icon="bookmark"
-            value="bluetooth"
             status={status}
-            color={status === 'checked' ? 'tomato':'white'}
+            color={status === 'checked' ? 'tomato' : 'white'}
             onPress={onButtonToggle}
             size={40}
             />

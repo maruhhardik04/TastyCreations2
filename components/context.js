@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import React, {createContext, useEffect, useState} from 'react';
+
 import {BASE_URL} from '../src/config';
 
 
@@ -17,15 +18,25 @@ import {BASE_URL} from '../src/config';
 
     const findBookMarks  = async() => {
       const result = await AsyncStorage.getItem('bookMarks');
-      if (result !== null) setNotes(JSON.parse(result)); 
+      if (result !== null) setbookMarks(JSON.parse(result)); 
     }
+
+    const updatedBookMarks= async(item) =>{
+      const updatedBookMarks = [...bookMarks, item];
+      setbookMarks(updatedBookMarks)
+      await AsyncStorage.setItem('bookMarks', JSON.stringify(updatedBookMarks));
+    } 
 
     const removeBookMarks = async(id) =>
     {
         const result = await AsyncStorage.getItem('bookMarks');
         if(result !== null) 
-        {
-            
+        { 
+
+            let filteredArray = bookMarks.filter(item => item.id !== id)
+            setbookMarks(filteredArray)
+            await AsyncStorage.setItem('bookMarks', JSON.stringify(filteredArray));
+          
         }
     }
 
@@ -179,7 +190,7 @@ import {BASE_URL} from '../src/config';
 
   useEffect(() => {
     isLoggedIn();
-    findBookMarks();
+    
   }, []);
 
  
@@ -199,6 +210,8 @@ import {BASE_URL} from '../src/config';
         bookMarks,
         setbookMarks,
         findBookMarks,
+        removeBookMarks,
+        updatedBookMarks
       }}>
       {children}
     </AuthContext.Provider>

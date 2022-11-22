@@ -16,7 +16,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './Home';
 import Category from './Category';  
 import Receipes from './Receipes';
-import Bookmarks from './Bookmark';
+import Bookmark from './Bookmark';
 import ReceipesDetails from './ReceipesDetails';
 import LoginScreen from './LoginScreen';
 import RegisterScreen from './RegisterScreen';
@@ -66,8 +66,13 @@ const ReceipesStackScreen = () => {
 
 const BookmarksStackScreen = () => {
     return(
-    <Stack.Navigator>
-       <Stack.Screen name="Bookmarks" component={Bookmarks} />
+    <Stack.Navigator
+    screenOptions={{
+      headerShown: false
+    }}
+    >
+       <Stack.Screen name="BookmarksScreen" component={Bookmark} />
+      <Stack.Screen name="ReceipesDetails" component={ReceipesDetails} />
     </Stack.Navigator>
 )}
 
@@ -170,7 +175,7 @@ const Navigation = ({navigation, route}) => {
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Category" component={CategoryStackScreen}/>
             <Tab.Screen name="Receipes" component={ReceipesStackScreen}  options={{unmountOnBlur:true}}/>
-            <Tab.Screen name="Bookmarks" component={Bookmarks} />
+            <Tab.Screen name="Bookmarks" component={BookmarksStackScreen} />
             
           </Tab.Navigator>
           ):(

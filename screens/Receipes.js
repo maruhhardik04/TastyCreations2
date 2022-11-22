@@ -1,5 +1,6 @@
 import { View, Text,SafeAreaView,FlatList,Dimensions,TouchableOpacity,Image } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useState,useEffect,useContext } from 'react'
+
 
 
 
@@ -13,7 +14,6 @@ const Receipes = ({navigation,route}) => {
   
   const getReceipes = async () => {
     try {
-      
      const response = await fetch('http://10.1.50.13:8000/item/');
     //  console.log(response);
      const json = await response.json();
@@ -22,6 +22,10 @@ const Receipes = ({navigation,route}) => {
      {
        setReceipes(json);
      } 
+     else if(bookMarks.length != 0)
+     {
+          setReceipes(bookMarks);
+     }
      else{
       setReceipes(route.params?.items);
      }
