@@ -2,11 +2,13 @@ import React, {useContext, useState} from 'react';
 import {
   Button,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   StyleSheet,
 } from 'react-native';
+
+import { TextInput,Button as MaterialButton } from 'react-native-paper';
+
 import Spinner from 'react-native-loading-spinner-overlay';
 // import {AuthContext} from '../context/AuthContext';
 import {AuthContext} from '../components/context'
@@ -54,7 +56,7 @@ const LoginScreen = ({navigation}) => {
       setPasswordErrorMsg('Password can not be empty')
       return;
     }
-    else if(password.length < 8 || password.length > 20)
+    else if(password.length < 3 || password.length > 20)
     {
       setpasswordError(true)
       setPasswordErrorMsg('Password  must have minimum:8 and maximum:20 characters')
@@ -77,30 +79,45 @@ const LoginScreen = ({navigation}) => {
       <Spinner visible={isLoading} />
       <View style={styles.wrapper}>
         <TextInput
-          style={styles.input}
+           label="Email"
+           mode='outlined'
+           style={{marginTop:'5%'}}
+           error={emailError}
+          // style={styles.input}
           value={email}
           placeholder="Enter email"
           onChangeText={text => setEmail(text)}
+          activeOutlineColor='tomato'
+          dense={true}
         />
          {(emailError)?( <Text style={{color:'red'}}><AntDesign name={'exclamationcircle'} size={15} color={'red'}  />{emailErrorMsg}</Text>):(<></>)}
 
 
         <TextInput
-          style={styles.input}
+          label="Password"
+          mode='outlined'
+          style={{marginTop:'5%'}}
+          error={passwordError}
           value={password}
           placeholder="Enter password"
           onChangeText={text => setPassword(text)}
           secureTextEntry
+          activeOutlineColor='tomato'
+          dense={true}
         />
          {(passwordError)?( <Text style={{color:'red'}}><AntDesign name={'exclamationcircle'} size={15} color={'red'}  />{passwordErrorMsg}</Text>):(<></>)}
 
          {(apiError)?( <Text style={{color:'red'}}><AntDesign name={'exclamationcircle'} size={15} color={'red'}  />{apiErrorMsg}</Text>):(<></>)}
 
 
-        <Button
-          title="Login"
+        <MaterialButton
+          mode="contained"
+          style={{marginTop:'5%'}}
+          color='tomato'
           onPress={checkTextInput}
-        />
+        >
+          Login
+        </MaterialButton>
 
         <View style={{flexDirection: 'row', marginTop: 20}}>
           <Text>Don't have an account? </Text>
@@ -130,7 +147,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
   link: {
-    color: 'blue',
+    color: 'tomato',
   },
 });
 

@@ -3,6 +3,8 @@ import axios from 'axios';
 import React, {createContext, useEffect, useState} from 'react';
 import {BASE_URL} from '../src/config';
 
+
+
  const AuthContext = createContext();
 
  const AuthProvider = ({children}) => {
@@ -11,8 +13,21 @@ import {BASE_URL} from '../src/config';
   const [splashLoading, setSplashLoading] = useState(false);
   const [apiError,setApiError]=useState(false);
   const [apiErrorMsg,setApiErrorMsg]=useState('');
+  const [bookMarks,setbookMarks]=useState([])
 
-  
+    const findBookMarks  = async() => {
+      const result = await AsyncStorage.getItem('bookMarks');
+      if (result !== null) setNotes(JSON.parse(result)); 
+    }
+
+    const removeBookMarks = async(id) =>
+    {
+        const result = await AsyncStorage.getItem('bookMarks');
+        if(result !== null) 
+        {
+            
+        }
+    }
 
   const register = (name, email, password) => {
     setIsLoading(true);
@@ -32,6 +47,7 @@ import {BASE_URL} from '../src/config';
     body: form
   }).then((response) => response.json())
   .then((result) => {
+   
     let userInfo = result;
     setUserInfo(userInfo);
     AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
@@ -53,10 +69,6 @@ import {BASE_URL} from '../src/config';
     form.append("username",email);
     form.append("password",password)
 
-    
-
-    console.log(form);
-
       
     fetch(`${BASE_URL}/login`, {
       method: 'POST',
@@ -64,10 +76,18 @@ import {BASE_URL} from '../src/config';
     }).then((response) => response.json())
     .then((result) => {
 
-      // setAPi Error here if error
-      // setApiError(true);
-      // setApiErrorMsg(e)
-      
+        if(result.detail != undefined)
+        {
+          setApiError(true);
+          setApiErrorMsg(result.detail)
+        }
+        else
+        {
+          setApiError(false);
+        }
+    
+     
+
       let userInfo = result;
       console.log(userInfo);
       setUserInfo(userInfo);
@@ -79,11 +99,39 @@ import {BASE_URL} from '../src/config';
   
       setIsLoading(false);
     });
+  };
+
+
+  const feedback = (r_id,u_id,review,rating) => {
+    setIsLoading(true);
 
     
- 
+    const form = new FormData();
+    form.append("r_id",r_id);
+    form.append("u_id",u_id)
+    form.append("description",review)
+    form.append("rating",rating)
+    
 
-  };
+    
+    fetch(`${BASE_URL}/create-feedback`, {
+      method: 'POST',
+      headers:{
+        'Authorization':`Bearer ${userInfo.access_token}`
+      },
+      body: form
+    })
+    .then((response) => response.json())
+    .then((result) => {
+      setIsLoading(false)
+      console.log(result);})
+      .catch((e) =>{console.log(`register error ${e}`);
+      setIsLoading(false)
+    });
+   
+
+
+  }
 
   const logout = () => {
     setIsLoading(true);
@@ -126,8 +174,12 @@ import {BASE_URL} from '../src/config';
     }
   };
 
+
+
+
   useEffect(() => {
     isLoggedIn();
+    findBookMarks();
   }, []);
 
  
@@ -141,8 +193,12 @@ import {BASE_URL} from '../src/config';
         register,
         login,
         logout,
+        feedback,
         apiError,
-        apiErrorMsg
+        apiErrorMsg,
+        bookMarks,
+        setbookMarks,
+        findBookMarks,
       }}>
       {children}
     </AuthContext.Provider>

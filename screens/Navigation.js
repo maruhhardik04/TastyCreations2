@@ -122,8 +122,8 @@ const Navigation = ({navigation, route}) => {
             screenOptions={({ route }) => ({
    
              
-   
-   
+              
+              tabBarHideOnKeyboard: true,
               headerTitleAlign:'center',
               tabBarShowLabel:false,
               tabBarStyle:[{
@@ -164,7 +164,7 @@ const Navigation = ({navigation, route}) => {
               tabBarActiveTintColor: 'tomato',
               tabBarInactiveTintColor: 'gray',
               tabBarLabelPosition:'below-icon'
-     
+              
             })}
           >
             <Tab.Screen name="Home" component={Home} />

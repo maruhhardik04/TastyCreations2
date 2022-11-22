@@ -8,6 +8,11 @@ const FeedBack = ({username,rating,description}) => {
 
 
     return (
+
+      <View>
+
+
+
       <Card style={{marginTop:10}}>
          <Card.Content>
       <View style={{flex:1,flexDirection:'column',padding:10,alignItems:'center'}}>
@@ -30,10 +35,13 @@ const FeedBack = ({username,rating,description}) => {
         <View style={{flex:1,flexDirection:'row',padding:10}}>
             <Text>{description}</Text>
         </View>
-
       </View>
       </Card.Content>
       </Card>
+      </View>
+      
+      
+      
     )
   
 }

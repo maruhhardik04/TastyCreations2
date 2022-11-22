@@ -2,11 +2,12 @@ import React, {useContext, useState} from 'react';
 import {
   Button,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   StyleSheet,
 } from 'react-native';
+
+import { TextInput,Button as MaterialButton } from 'react-native-paper';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {AuthContext} from '../components/context';
 
@@ -108,32 +109,50 @@ const RegisterScreen = ({navigation}) => {
    
 
         <TextInput
-          style={styles.input}
+          label="Username"
+          mode='outlined'
+          error={nameError}
+          style={{marginTop:'5%'}}
           value={name}
-          placeholder="Enter name"
+          placeholder="Enter Username"
           onChangeText={text => setName(text)}
+          activeOutlineColor='tomato'
+          dense={true}
         />
         {(nameError)?( <Text style={{color:'red'}}><AntDesign name={'exclamationcircle'} size={15} color={'red'}  />{nameErrorMsg}</Text>):(<></>)}
         
         <TextInput
-          style={styles.input}
+          label="Email"
+          mode='outlined'
+          style={{marginTop:'5%'}}
+          error={emailError}
           value={email}
           placeholder="Enter email"
           onChangeText={text => setEmail(text)}
+          activeOutlineColor='tomato'
+          dense={true}
         />
          {(emailError)?( <Text style={{color:'red'}}><AntDesign name={'exclamationcircle'} size={15} color={'red'}  />{emailErrorMsg}</Text>):(<></>)}
         <TextInput
-          style={styles.input}
+         
+          label="Password"
+          mode='outlined'
+          style={{marginTop:'5%'}}
+          error={passwordError}
           value={password}
           placeholder="Enter password"
           onChangeText={text => setPassword(text)}
           secureTextEntry
+          activeOutlineColor='tomato'
+          dense={true}
         />
          {(passwordError)?( <Text style={{color:'red'}}><AntDesign name={'exclamationcircle'} size={15} color={'red'}  />{passwordErrorMsg}</Text>):(<></>)}
-        <Button
-          title="Register"
+        <MaterialButton
+          mode="contained"
+          style={{marginTop:'5%'}}
+          color='tomato'
           onPress={checkTextInput}
-        />
+        >Register</MaterialButton>
 
         <View style={{flexDirection: 'row', marginTop: 20}}>
           <Text>Already have an accoutn? </Text>
@@ -163,7 +182,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
   link: {
-    color: 'blue',
+    color: 'tomato',
   },
 });
 
