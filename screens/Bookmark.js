@@ -58,7 +58,7 @@ const Bookmark = ({navigation,route}) => {
           
             <>
             <Text style={styles.headerText}>No BookMarks </Text>
-            <Image style={{width:windowWidth-20,height:300,borderRadius:20}}  source={require("../assets/bookmark.png")}/>
+            <Image style={{width:300,height:300,borderRadius:20}}  source={require("../assets/bookmark.png")}/>
             </>
           
       }

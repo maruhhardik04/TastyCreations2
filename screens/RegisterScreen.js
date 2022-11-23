@@ -5,6 +5,9 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
+  SafeAreaView,
+  Image,
+  Dimensions,
 } from 'react-native';
 
 import { TextInput,Button as MaterialButton } from 'react-native-paper';
@@ -102,9 +105,16 @@ const RegisterScreen = ({navigation}) => {
   };
 
 
+  const windowWidth = Dimensions.get('window').width;
+
   return (
     <View style={styles.container}>
       <Spinner visible={isLoading} />
+
+      <Text style={styles.headerText}>Register</Text>
+      <Image style={{width:windowWidth-20,height:300,borderRadius:20}}  source={require("../assets/bookmark.png")}/>
+    
+
       <View style={styles.wrapper}>
    
 
@@ -186,6 +196,13 @@ const styles = StyleSheet.create({
   link: {
     color: 'tomato',
   },
+  headerText: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+   fontWeight: 'bold',
+   color: 'tomato'
+  }
 });
 
 export default RegisterScreen;

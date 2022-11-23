@@ -5,6 +5,9 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
+  Image,
+  Dimensions,
+  SafeAreaView
 } from 'react-native';
 
 import { TextInput,Button as MaterialButton } from 'react-native-paper';
@@ -73,10 +76,16 @@ const LoginScreen = ({navigation}) => {
    
   };
 
+  const windowWidth = Dimensions.get('window').width;
+
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Spinner visible={isLoading} />
+    
+    <Text style={styles.headerText}>Sign In</Text>
+    <Image style={{width:windowWidth-20,height:300,borderRadius:20}}  source={require("../assets/bookmark.png")}/>
+     
       <View style={styles.wrapper}>
         <TextInput
            label="Email"
@@ -126,7 +135,7 @@ const LoginScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -149,6 +158,13 @@ const styles = StyleSheet.create({
   link: {
     color: 'tomato',
   },
+  headerText: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+   fontWeight: 'bold',
+   color: 'tomato'
+  }
 });
 
 export default LoginScreen;
