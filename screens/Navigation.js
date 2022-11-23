@@ -174,7 +174,7 @@ const Navigation = ({navigation, route}) => {
           >
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="Category" component={CategoryStackScreen}/>
-            <Tab.Screen name="Receipes" component={ReceipesStackScreen}  options={{unmountOnBlur:true}}/>
+            <Tab.Screen name="Receipes" component={ReceipesStackScreen} />
             <Tab.Screen name="Bookmarks" component={BookmarksStackScreen} />
             
           </Tab.Navigator>

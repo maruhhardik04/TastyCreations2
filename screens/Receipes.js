@@ -21,10 +21,6 @@ const Receipes = ({navigation,route}) => {
      if(route.params?.items == undefined)
      {
        setReceipes(json);
-     } 
-     else if(bookMarks.length != 0)
-     {
-          setReceipes(bookMarks);
      }
      else{
       setReceipes(route.params?.items);

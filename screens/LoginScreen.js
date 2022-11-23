@@ -83,8 +83,8 @@ const LoginScreen = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <Spinner visible={isLoading} />
     
-    <Text style={styles.headerText}>Sign In</Text>
-    <Image style={{width:windowWidth-20,height:300,borderRadius:20}}  source={require("../assets/bookmark.png")}/>
+    <Text style={styles.headerText}>Login</Text>
+    <Image style={{width:windowWidth-20,height:300,borderRadius:20,resizeMode:'contain'}}  source={require("../assets/bookmark.png")}/>
      
       <View style={styles.wrapper}>
         <TextInput

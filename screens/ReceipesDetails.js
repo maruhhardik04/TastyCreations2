@@ -1,4 +1,18 @@
-import { ActivityIndicator,StyleSheet, Text, View,SafeAreaView,Dimensions,Image,ScrollView,useWindowDimensions,ImageBackground  } from 'react-native'
+import { ActivityIndicator,
+  StyleSheet, 
+  Text, 
+  View,
+  SafeAreaView,
+  Dimensions,
+  Image,
+  ScrollView,
+  useWindowDimensions,
+  ImageBackground,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform
+  } from 'react-native'
 import React, { useState,useEffect,useContext,useLayoutEffect } from 'react'
 import RenderHtml from 'react-native-render-html'
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
@@ -58,7 +72,7 @@ const ReceipesDetails = ({navigation,route}) => {
        setCanReview(json.can_rev);
      
        const isStatus =  bookMarks.some(item => item.id === json.item_data.id); 
-        console.log(isStatus);
+        // console.log(isStatus);
        if(isStatus){
         setStatus('checked')
         } 
@@ -79,7 +93,7 @@ const ReceipesDetails = ({navigation,route}) => {
     const checkTextInput = () => {
 
 
-      //Check for the Email TextInput
+    
      
      
   
@@ -96,6 +110,7 @@ const ReceipesDetails = ({navigation,route}) => {
       
       feedback(route.params.id,userInfo.user_id,review,rating);
       setCanReview(false)
+      getReceipeDetails();
     };
 
     
@@ -145,7 +160,10 @@ const ReceipesDetails = ({navigation,route}) => {
   const ThirdRoute = () => (
    <ScrollView>
     {(canReview)?
-      (<View style={{flex: 1,alignItems: 'center', justifyContent: 'center',}}>
+      (
+        
+      <View style={{flex: 1,alignItems: 'center', justifyContent: 'center',}} behavior={Platform.OS === "ios"?"padding":"height"}>
+        
       <View style={{width: '80%',marginTop:'5%'}}>
       
       <AirbnbRating
@@ -176,14 +194,15 @@ const ReceipesDetails = ({navigation,route}) => {
            <MaterialButton
             mode="contained"
             style={{marginTop:'5%'}}
-            color= {(status)}
+            color= {'tomato'}
             onPress={checkTextInput}
           >
             Submit
           </MaterialButton>
   
+        </View>
       </View>
-      </View>):(<></>)
+):(<></>)
     }
     
    
@@ -231,7 +250,7 @@ const renderScene = SceneMap({
        
 
     
-    <View style={{width:windowWidth,height:'100%'}} >
+    <View style={{width:windowWidth,height:'100%'}} behavior={Platform.OS === 'ios'?"padding":"height"}>
       
       <View>
 

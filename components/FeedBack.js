@@ -15,7 +15,7 @@ const FeedBack = ({username,rating,description}) => {
 
       <Card style={{marginTop:10}}>
          <Card.Content>
-      <View style={{flex:1,flexDirection:'column',padding:10,alignItems:'center'}}>
+        <View style={{flex:1,flexDirection:'column',padding:10,alignItems:'center'}}>
       
         
         <View style={{flex:1,flexDirection:'row',padding:10,paddingBottom:0}}>
