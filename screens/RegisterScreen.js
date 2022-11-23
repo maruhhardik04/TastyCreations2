@@ -28,7 +28,7 @@ const RegisterScreen = ({navigation}) => {
 
 
 
-  const {isLoading, register,userInfo} = useContext(AuthContext);
+  const {isLoading, register,userInfo,  apiError,apiErrorMsg} = useContext(AuthContext);
 
 
   const checkTextInput = () => {
@@ -133,6 +133,8 @@ const RegisterScreen = ({navigation}) => {
           dense={true}
         />
          {(emailError)?( <Text style={{color:'red'}}><AntDesign name={'exclamationcircle'} size={15} color={'red'}  />{emailErrorMsg}</Text>):(<></>)}
+         {(apiError)?( <Text style={{color:'red'}}><AntDesign name={'exclamationcircle'} size={15} color={'red'}  />{apiErrorMsg}</Text>):(<></>)}
+
         <TextInput
          
           label="Password"

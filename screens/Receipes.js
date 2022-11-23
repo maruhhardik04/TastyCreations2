@@ -62,7 +62,7 @@ const ReceipeItem = ({ item  }) => {
 
 
   return (
-    <SafeAreaView>
+    <SafeAreaView  >
      
      <FlatList
         data={receipes}

@@ -1,5 +1,5 @@
 import { ActivityIndicator,StyleSheet, Text, View,SafeAreaView,Dimensions,Image,ScrollView,useWindowDimensions,ImageBackground  } from 'react-native'
-import React, { useState,useEffect,useContext } from 'react'
+import React, { useState,useEffect,useContext,useLayoutEffect } from 'react'
 import RenderHtml from 'react-native-render-html'
 import { TabView, SceneMap,TabBar } from 'react-native-tab-view';
 import FeedBack from '../components/FeedBack';
@@ -17,7 +17,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const ReceipesDetails = ({navigation,route}) => {
 
-  const {userInfo,feedback,removeBookMarks,updatedBookMarks} = useContext(AuthContext);
+  const {userInfo,feedback,removeBookMarks,updatedBookMarks,bookMarks} = useContext(AuthContext);
   
     const [isLoading, setLoading] = useState(true);
     const [receipeDetails,setReceipeDetails] = useState({});
@@ -26,41 +26,47 @@ const ReceipesDetails = ({navigation,route}) => {
     const [reviewError, setreviewError] = useState(false);
     const[canReview,setCanReview]=useState(true);
     const [rating,setRating]=useState(2);
-    const [status, setStatus] = useState('unchecked');
+    const [status, setStatus] = useState('');
     
 
   
 
     const onButtonToggle = () => {
-
-      
-      setStatus(status === 'checked' ? 'unchecked' : 'checked');
-
-
-
+     
       if(status === 'checked')
       {
-         updatedBookMarks(receipeDetails);
-      } 
-      
-      if(status === 'unchecked')
-      {
         removeBookMarks(receipeDetails.id)
+        setStatus('unchecked')
+      } 
+      else
+      {    
+        updatedBookMarks(receipeDetails);
+        setStatus('checked')
       }
-
     };
+
+   
 
 
     const getReceipeDetails = async () => {
       try {
        const response = await fetch(`http://10.1.50.13:8000/item/${route.params.id}?u_id=${userInfo.user_id}`);
        const json = await response.json();
-    
+      
        setReceipeDetails(json.item_data);
        setReceipeFeedbacks(json.feedbacks);
        setCanReview(json.can_rev);
-        // console.log(json.feedbacks);
-        // console.log(receipeDetails);
+     
+       const isStatus =  bookMarks.some(item => item.id === json.item_data.id); 
+        console.log(isStatus);
+       if(isStatus){
+        setStatus('checked')
+        } 
+       else
+      {
+      setStatus('unchecked')
+      } 
+
     } catch (error) {
        console.error(error);
      } finally {
@@ -90,16 +96,19 @@ const ReceipesDetails = ({navigation,route}) => {
       
       feedback(route.params.id,userInfo.user_id,review,rating);
       setCanReview(false)
-      getReceipeDetails()
     };
 
-
-   
+    
+    
+    
     useEffect(()=>{
       getReceipeDetails();
-
+   
     },[]);
     
+ 
+ 
+
        
   const { width } = useWindowDimensions();
 
@@ -231,7 +240,7 @@ const renderScene = SceneMap({
           <ToggleButton
             icon="bookmark"
             status={status}
-            color={status === 'checked' ? 'tomato' : 'white'}
+            color={ (status === 'checked') ? 'tomato' : 'white'}
             onPress={onButtonToggle}
             size={40}
             />

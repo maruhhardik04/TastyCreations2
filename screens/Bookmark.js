@@ -1,4 +1,4 @@
-import { View, Text,SafeAreaView,FlatList,Dimensions,TouchableOpacity,Image } from 'react-native';
+import { View, Text,SafeAreaView,FlatList,Dimensions,TouchableOpacity,Image,StyleSheet } from 'react-native';
 import React, { useState,useEffect,useContext } from 'react'
 import {AuthContext} from '../components/context'
 
@@ -25,6 +25,9 @@ const Bookmark = ({navigation,route}) => {
   getReceipes();
   },[findBookMarks]);
 
+    
+  const windowWidth = Dimensions.get('window').width;
+
   const ReceipeItem = ({ item  }) => {
 
 
@@ -38,24 +41,26 @@ const Bookmark = ({navigation,route}) => {
     )
   }
   
-  
-  const windowWidth = Dimensions.get('window').width;
+
 
 
 
 
   return (
    
-    <SafeAreaView>
-      { (bookMarks != null) ? <FlatList
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      { (bookMarks.length != 0) ? <FlatList
         data={receipes}
         renderItem={ReceipeItem}
         keyExtractor={item => item.id}
         >
         </FlatList>:
-          <>
-            <Text>No Book Marks</Text>
-          </>
+          
+            <>
+            <Text style={styles.headerText}>No BookMarks </Text>
+            <Image style={{width:windowWidth-20,height:300,borderRadius:20}}  source={require("../assets/bookmark.png")}/>
+            </>
+          
       }
    
       
@@ -66,3 +71,18 @@ const Bookmark = ({navigation,route}) => {
 }
 
 export default Bookmark
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  headerText: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+ fontWeight: 'bold'
+  }
+});

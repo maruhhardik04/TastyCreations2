@@ -16,10 +16,7 @@ import {BASE_URL} from '../src/config';
   const [apiErrorMsg,setApiErrorMsg]=useState('');
   const [bookMarks,setbookMarks]=useState([])
 
-    const findBookMarks  = async() => {
-      const result = await AsyncStorage.getItem('bookMarks');
-      if (result !== null) setbookMarks(JSON.parse(result)); 
-    }
+   
 
     const updatedBookMarks= async(item) =>{
       const updatedBookMarks = [...bookMarks, item];
@@ -59,6 +56,18 @@ import {BASE_URL} from '../src/config';
   }).then((response) => response.json())
   .then((result) => {
    
+
+    if(result.detail != undefined)
+    {
+      setApiError(true);
+      setApiErrorMsg(result.detail)
+    }
+    else
+    {
+      setApiError(false);
+    }
+
+
     let userInfo = result;
     setUserInfo(userInfo);
     AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
@@ -186,11 +195,22 @@ import {BASE_URL} from '../src/config';
   };
 
 
-
+  const findBookMarks  = async() => {
+    try
+    {
+      const result = await AsyncStorage.getItem('bookMarks');
+      if (result !== null) setbookMarks(JSON.parse(result)); 
+    }
+    catch (e)
+    {
+      console.log(`is logged in error ${e}`);
+    }
+  
+  }
 
   useEffect(() => {
     isLoggedIn();
-    
+    findBookMarks();
   }, []);
 
  
