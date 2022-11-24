@@ -113,7 +113,7 @@ const Tab = createBottomTabNavigator();
 
 const Navigation = ({navigation, route}) => {
   
-  const { userInfo,splashLoading} = useContext(AuthContext);  
+  const { userInfo,splashLoading,bookMarks} = useContext(AuthContext);  
 
   return(
 
@@ -172,10 +172,10 @@ const Navigation = ({navigation, route}) => {
               
             })}
           >
-            <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="Category" component={CategoryStackScreen}/>
+            {/* <Tab.Screen name="Home" component={Home} /> */}
+            <Tab.Screen name="Home" component={CategoryStackScreen}/>
             <Tab.Screen name="Receipes" component={ReceipesStackScreen} />
-            <Tab.Screen name="Bookmarks" component={BookmarksStackScreen} />
+            <Tab.Screen name="Bookmarks" component={BookmarksStackScreen}   options={{ tabBarBadge: bookMarks.length }}/>
             
           </Tab.Navigator>
           ):(

@@ -23,6 +23,7 @@ import {AuthContext} from '../components/context'
 import {BASE_URL} from '../src/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -92,11 +93,6 @@ const ReceipesDetails = ({navigation,route}) => {
     
     const checkTextInput = () => {
 
-
-    
-     
-     
-  
       if (!review.trim()) {
         setreviewError(true)
         return;
@@ -106,8 +102,7 @@ const ReceipesDetails = ({navigation,route}) => {
         setreviewError(false)
       }
       
-   
-      
+        
       feedback(route.params.id,userInfo.user_id,review,rating);
       setCanReview(false)
       getReceipeDetails();
@@ -180,7 +175,7 @@ const ReceipesDetails = ({navigation,route}) => {
 
          <TextInput
             label="Review"
-             mode='outlined'
+            mode='outlined'
             style={{marginTop:'10%'}}
             error={reviewError}
             value={review}
@@ -188,6 +183,7 @@ const ReceipesDetails = ({navigation,route}) => {
             onChangeText={text => setReview(text)}
             activeOutlineColor='tomato'
             dense={true}
+            numberOfLines={4}
             multiline={true}
            
           />  
@@ -250,12 +246,13 @@ const renderScene = SceneMap({
        
 
     
-    <View style={{width:windowWidth,height:'100%'}} behavior={Platform.OS === 'ios'?"padding":"height"}>
+    <View style={{width:windowWidth,height:'100%'}} >
       
       <View>
 
           <ImageBackground style={styles.categoriesPhoto}  source={{uri:'http://10.1.50.13:8000/static/'+receipeDetails.image}}>
-          <View style={{flex:1,alignItems:'flex-end',marginTop:'5%',marginEnd:'3%'}}>
+          <View style={{flex:1,flexDirection:'row',justifyContent:'space-between',marginTop:'5%',marginEnd:'3%'}}>
+          <Ionicons name={'arrow-back'} size={40} color={'white'} onPress={()=>{ navigation.goBack();}}/> 
           <ToggleButton
             icon="bookmark"
             status={status}
@@ -263,8 +260,8 @@ const renderScene = SceneMap({
             onPress={onButtonToggle}
             size={40}
             />
-          </View >
-           <Text style={{color:'white'}} onPress={()=>{ navigation.goBack();}}>{receipeDetails.title}</Text>
+          </View>
+           <Text style={{color:'white',textAlign:'center',fontSize:20,backgroundColor:'rgba(52, 52, 52, 0.8)'}} >{receipeDetails.title}</Text>
           </ImageBackground>
           
       </View>

@@ -88,11 +88,10 @@ const LoginScreen = ({navigation}) => {
      
       <View style={styles.wrapper}>
         <TextInput
-           label="Email"
-           mode='outlined'
-           style={{marginTop:'5%'}}
-           error={emailError}
-          // style={styles.input}
+          label="Email"
+          mode='outlined'
+          style={{marginTop:'5%'}}
+          error={emailError}
           value={email}
           placeholder="Enter email"
           onChangeText={text => setEmail(text)}

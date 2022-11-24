@@ -1,4 +1,4 @@
-import { View, Text,SafeAreaView,FlatList,Dimensions,TouchableOpacity,Image } from 'react-native';
+import { View, Text,SafeAreaView,FlatList,Dimensions,TouchableOpacity,Image,ImageBackground } from 'react-native';
 import React, { useState,useEffect,useContext } from 'react'
 
 
@@ -50,8 +50,10 @@ const ReceipeItem = ({ item  }) => {
     <TouchableOpacity style={{ padding: 10 }}  onPress={()=>{
       navigation.navigate('ReceipesDetails',{id:item.id});
    }}>
+   
       <Image style={{width:windowWidth-20,height:150,borderRadius:20}} source={{uri:'http://10.1.50.13:8000/static/'+item.image}}/>
-      <Text style={{textAlign:'center',color:'black'}}>{item.title}</Text>
+      <Text style={{textAlign:'center',color:'white',bottom:26,fontSize:20,backgroundColor:'rgba(52, 52, 52, 0.8)',borderBottomLeftRadius:20,borderBottomRightRadius:20}}>{item.title}</Text>
+     
     </TouchableOpacity> 
   )
 }

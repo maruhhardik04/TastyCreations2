@@ -10,6 +10,7 @@ const Category = ({navigation,route}) => {
   const [isLoading, setLoading] = useState(true);
   const [categories,setCategories] = useState([]);
   const screenHeight = Dimensions.get('window').height
+  const screenwith = Dimensions.get('window').width
   
   const getCategories = async () => {
     try {
@@ -50,12 +51,13 @@ const CategoryItem = ({ item  }) => {
 
   return (
     
-    <SafeAreaView >
+    <SafeAreaView>
+    
         <FlatList
         data={categories}
         renderItem={CategoryItem}
         keyExtractor={item => item.id}
-        >
+       >
         </FlatList>
     
     
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#333333',
-    marginTop: 8,
+    marginTop: 8
   },
   categoriesInfo: {
     marginTop: 3,
