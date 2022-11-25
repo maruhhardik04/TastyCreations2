@@ -156,7 +156,20 @@ const ReceipesDetails = ({navigation,route}) => {
       (
         
       <View style={{flex: 1,alignItems: 'center', justifyContent: 'center',}} behavior={Platform.OS === "ios"?"padding":"height"}>
-        
+
+      <MaterialButton
+            mode="contained"
+            style={{marginTop:'5%'}}
+            uppercase={false}
+            color={'tomato'}
+            onPress={()=>{
+              console.log(log);
+            }}
+          >
+            Give Feedback
+          </MaterialButton>
+
+{/*         
       <View style={{width: '80%',marginTop:'5%'}}>
       
       <AirbnbRating
@@ -195,7 +208,7 @@ const ReceipesDetails = ({navigation,route}) => {
             Submit
           </MaterialButton>
   
-        </View>
+        </View> */}
       </View>
 ):(<></>)
     }

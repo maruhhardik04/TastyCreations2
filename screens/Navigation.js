@@ -132,7 +132,6 @@ const Navigation = ({navigation, route}) => {
               // tabBarHideOnKeyboard: true,
               headerTitleAlign:'center',
               tabBarShowLabel:false,
-              tabBarHideOnKeyboard:true,
               tabBarStyle:[{
                 
                display:"flex",
