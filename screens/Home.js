@@ -5,10 +5,7 @@ import FeedBack from '../components/FeedBack'
 const Home = () => {
   return (
     <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-
-      
-
-
+      <Image />
     </SafeAreaView>
   )
 }

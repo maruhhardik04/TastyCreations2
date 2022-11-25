@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet,Button } from 'react-native'
 import React, {useContext} from 'react';
 
 //Navigation components
@@ -21,10 +21,11 @@ import ReceipesDetails from './ReceipesDetails';
 import LoginScreen from './LoginScreen';
 import RegisterScreen from './RegisterScreen';
 import SplashScreen from './SplashScreen';
+import Demo from './BackUp/Demo'
 import {AuthContext} from '../components/context';
 
 import {  Text,Dimensions } from 'react-native';
-
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const fullScreenWidth = Dimensions.get('window').width;
 const Stack = createNativeStackNavigator();
@@ -113,7 +114,7 @@ const Tab = createBottomTabNavigator();
 
 const Navigation = ({navigation, route}) => {
   
-  const { userInfo,splashLoading,bookMarks} = useContext(AuthContext);  
+  const { userInfo,splashLoading,bookMarks,logout} = useContext(AuthContext);  
 
   return(
 
@@ -124,12 +125,9 @@ const Navigation = ({navigation, route}) => {
           :  
           userInfo.access_token ? (
             <Tab.Navigator
-            tabBarHideOnKeyboard={false}
+          
             screenOptions={({ route }) => ({
-   
-             
-              
-              // tabBarHideOnKeyboard: true,
+    
               headerTitleAlign:'center',
               tabBarShowLabel:false,
               tabBarStyle:[{
@@ -173,10 +171,29 @@ const Navigation = ({navigation, route}) => {
               
             })}
           >
-            {/* <Tab.Screen name="Home" component={Home} /> */}
-            <Tab.Screen name="Home" component={CategoryStackScreen}/>
-            <Tab.Screen name="Receipes" component={ReceipesStackScreen} />
-            <Tab.Screen name="Bookmarks" component={BookmarksStackScreen}   options={{ tabBarBadge: bookMarks.length }}/>
+            {/* <Tab.Screen name="Home" component={Demo} /> */}
+            <Tab.Screen name="Home" component={CategoryStackScreen} 
+               
+                options={{
+                  headerShown: false, 
+                }}
+            
+            />
+            <Tab.Screen name="Receipes" component={ReceipesStackScreen} 
+             
+            options={{
+              headerShown: false, 
+            }}
+          
+            
+            />
+            <Tab.Screen name="Bookmarks" component={BookmarksStackScreen}   
+            
+            options={{ 
+              
+              headerShown: false,
+              tabBarBadge: bookMarks.length
+               }}/>
             
           </Tab.Navigator>
           ):(
