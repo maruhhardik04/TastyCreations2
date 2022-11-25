@@ -124,6 +124,7 @@ const Navigation = ({navigation, route}) => {
           :  
           userInfo.access_token ? (
             <Tab.Navigator
+            tabBarHideOnKeyboard={false}
             screenOptions={({ route }) => ({
    
              
@@ -131,8 +132,9 @@ const Navigation = ({navigation, route}) => {
               // tabBarHideOnKeyboard: true,
               headerTitleAlign:'center',
               tabBarShowLabel:false,
+              tabBarHideOnKeyboard:true,
               tabBarStyle:[{
-               
+                
                display:"flex",
                postion:'absolute',
                bottom:25,

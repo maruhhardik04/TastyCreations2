@@ -8,10 +8,8 @@ import { ActivityIndicator,
   ScrollView,
   useWindowDimensions,
   ImageBackground,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Platform
+  Platform,
+  Modal
   } from 'react-native'
 import React, { useState,useEffect,useContext,useLayoutEffect } from 'react'
 import RenderHtml from 'react-native-render-html'
@@ -174,13 +172,14 @@ const ReceipesDetails = ({navigation,route}) => {
        
 
          <TextInput
+            
             label="Review"
             mode='outlined'
             style={{marginTop:'10%'}}
             error={reviewError}
             value={review}
-            placeholder="Enter Review or Suggestion"
             onChangeText={text => setReview(text)}
+            placeholder="Enter Review or Suggestion"
             activeOutlineColor='tomato'
             dense={true}
             numberOfLines={4}
