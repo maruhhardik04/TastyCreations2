@@ -23,6 +23,9 @@ const Category = ({navigation}) => {
 
   const [isLoading, setLoading] = useState(true);
   const [categories,setCategories] = useState([]);
+  const [filterData,setFilterData]= useState([]);
+  const [search,setSearch]=useState('');
+
   const screenHeight = Dimensions.get('window').height
   const screenwith = Dimensions.get('window').width
   const { userInfo,splashLoading,bookMarks,logout} = useContext(AuthContext);  
@@ -34,13 +37,36 @@ const Category = ({navigation}) => {
      const json = await response.json();
 
      setCategories(json);
-
+     setFilterData(json);
    } catch (error) {
      console.error(error);
    } finally {
      setLoading(false);
    }
   
+ }
+
+
+ const searchFilter = (text) => {
+      if(text)
+      {
+        const newData= categories.filter((item)=>{
+
+          const itemData = item.name 
+                          ?item.name.toUpperCase()
+                          : ''.toUpperCase();
+                          
+          const textData = text.toUpperCase();
+          return itemData.indexOf(textData) > -1;                 
+        });
+        setFilterData(newData);
+        setSearch(text);
+      }
+      else
+      {
+          setFilterData(categories);
+          setSearch(text);
+      }
  }
 
 
@@ -115,6 +141,8 @@ const Category = ({navigation}) => {
           <TextInput
             style={{flex: 1, fontSize: 18}}
             placeholder="Search for food"
+            value={search}
+            onChangeText={(text) => searchFilter(text)}
           />
         </View>
       
@@ -123,7 +151,7 @@ const Category = ({navigation}) => {
 
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        data={categories}
+        data={filterData}
         renderItem={CategoryItem}
         keyExtractor={item => item.id}
        >
